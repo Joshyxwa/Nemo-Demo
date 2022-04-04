@@ -1,0 +1,11 @@
+<!-- Inherits from layout.html -->
+{% extends "layout.html" %}
+<!-- The block content replace the one encapsulated in  layout.html -->
+{% block content %}
+<div>
+<h1>Hello World</h1>
+</div>
+<div data-role="controls">
+    <button id='record_btn' href="/record">Record</button>
+</div>
+{% endblock %}
