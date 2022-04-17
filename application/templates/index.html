@@ -1,11 +1,45 @@
+<script src="../static/js/recorder.js"></script>
+<script type="text/javascript" src="../static/js/data.js"></script>
+
+
 <!-- Inherits from layout.html -->
 {% extends "layout.html" %}
 <!-- The block content replace the one encapsulated in  layout.html -->
 {% block content %}
-<div>
-<h1>Hello World</h1>
-</div>
-<div data-role="controls">
-    <button id='record_btn' href="/record">Record</button>
-</div>
+    <div>
+        <h1>Record Voice with Nemo ASR</h1>
+    </div>
+    <div id="controls">
+        <form method="post" action="/stop_record">
+            <button id="recordButton" name="recordButton">Record</button>
+            <button id="pauseButton" name="pauseButton"disabled>Pause</button>
+            <button id="stopButton" name="stopButton" disabled type="submit">Stop</button>
+        </form>
+    </div>
+
+    <form action='/upload_audiofile' method="POST" enctype="multipart/form-data">
+        <div class="form-group dropdown">
+            <label>Select Language Model</label>
+            <select name="selectlanguage" id="selectlanguage">
+                <option value="english">English</option>
+                <option value="chinese">Chinese</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Select Audio File</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" name="audiofile" id="audiofile">
+                <label class="custom-file-label" for="audiofile">Select Audio File...</label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Upload File</button>
+    </form>
+
+    <div id="formats">Format: start recording to see sample rate</div>
+    <p><strong>Recordings:</strong></p>
+    <ol id="recordingsList"></ol>
+    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/recorder.js"></script>
 {% endblock %}
