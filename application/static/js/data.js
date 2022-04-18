@@ -1,19 +1,35 @@
 
 function retrieveJson() {
-    // var config = {};
-    // config.JSON_DATA = {JSON_DATA};
-    // const jsonData= require(os.join(config.JSON_DATA, 'punc_text.json')); 
-    // console.log(jsonData);
-    // alert(str(jsonData))
+
     const fs = require('fs')
     fs.readFile('../json/punc_text.json', 'utf8', (err, jsonString) => {
     if (err) {
         console.log("File read failed:", err)
         return
     }
-    console.log('File data:', jsonString) 
+    return jsonString
+    // console.log('File data:', jsonString) 
 })
 }
+document.body.onload = addElement;
+function addElement () {
+    // create a new div element
+    const newDiv = document.createElement("p");
+  
+    const obj = JSON.parse(retrieveJson());
+
+    console.log(obj.punc_text)
+    // and give it some content
+    const newContent = document.createTextNode(obj.punc_text);
+  
+    // add the text node to the newly created div
+    newDiv.appendChild(newContent);
+  
+    // add the newly created element and its content into the DOM
+    const element = document.getElementById("result");
+    const child = document.getElementById("transcribed_header");
+    element.insertAdjacentElement(newDiv, child);
+  }
 
 $(function(){
     $(".dropdown-menu").on('click', 'a', function(){

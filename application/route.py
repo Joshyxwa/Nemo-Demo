@@ -17,20 +17,38 @@ app.jinja_env.globals.update(config=app.config)
 # Model Functions
 def eng_asr_model(filename):
 
+    #load audio file
     resampled_audio, sample_rate = librosa.load(os.path.join(app.config["AUDIO_UPLOADS"], filename), sr=22050)
+
+    # delete audio file
+    os.remove(os.path.join(app.config["AUDIO_UPLOADS"], filename))
+
+    # transcribe english audio to english text
     citrinet_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "eng_citrinet.nemo"))
-    # citrinet_model = onnx.load(os.path.join(app.config["MODEL_FILES"], "citrinet.onnx"))
-    sf.write("preprocessed_audio.wav", resampled_audio, sample_rate)
-    transcribed_text = citrinet_model.transcribe(paths2audio_files=["preprocessed_audio.wav"], batch_size=4)
+    sf.write(os.path.join(app.config["AUDIO_UPLOADS"], "preprocessed_audio.wav"), resampled_audio, sample_rate)
+    transcribed_text = citrinet_model.transcribe(paths2audio_files=[os.path.join(app.config["AUDIO_UPLOADS"], "preprocessed_audio.wav")], batch_size=4)
+    
+    # remove processed audio file
+    os.remove(os.path.join(app.config["AUDIO_UPLOADS"], "preprocessed_audio.wav"))
+
     return transcribed_text
 
 def chi_asr_model(filename):
 
+    #load audio file
     resampled_audio, sample_rate = librosa.load(os.path.join(app.config["AUDIO_UPLOADS"], filename), sr=22050)
+
+    # delete audio file
+    os.remove(os.path.join(app.config["AUDIO_UPLOADS"], filename))
+
+    # transcribe chinese audio to chinese text
     citrinet_model = nemo_asr.models.EncDecCTCModel.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "chi_citrinet.nemo"))
-    # citrinet_model = onnx.load(os.path.join(app.config["MODEL_FILES"], "citrinet.onnx"))
-    sf.write("preprocessed_audio.wav", resampled_audio, sample_rate)
-    transcribed_text = citrinet_model.transcribe(paths2audio_files=["preprocessed_audio.wav"], batch_size=4)
+    sf.write(os.path.join(app.config["AUDIO_UPLOADS"], "preprocessed_audio.wav"), resampled_audio, sample_rate)
+    transcribed_text = citrinet_model.transcribe(paths2audio_files=[os.path.join(app.config["AUDIO_UPLOADS"], "preprocessed_audio.wav")], batch_size=4)
+    
+    # remove processed audio file
+    os.remove(os.path.join(app.config["AUDIO_UPLOADS"], "preprocessed_audio.wav"))
+
     return transcribed_text
 
 def punc_model(text):
@@ -86,9 +104,7 @@ def upload_audiofile():
             else:
                 transcribed_text = chi_asr_model(audio_file.filename)
                 print(transcribed_text)
-                punc_text = punc_model(transcribed_text)
-                print(punc_text)
-                flash(punc_text)
+                flash(transcribed_text)
 
             return redirect(request.url)
-    return render_template('index.html')
+    return render_template('result.html')
