@@ -54,9 +54,9 @@ def chi_asr_model(filename):
 def punc_model(text):
     puncbert_model = nemo_nlp.models.PunctuationCapitalizationModel.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "punc_bert.nemo"))
     transformed_text = puncbert_model.add_punctuation_capitalization([i for i in text])
-    dict_texts = {  "transcribed_text": text,
-                    "punc_text": transformed_text
-                }
+    dict_texts = [ {"transcribed_text": text[0],
+                    "punc_text": transformed_text[0]}
+    ]
     # json_texts = json.loads(str(dict_texts))
     with open(os.path.join(app.config["JSON_DATA"], 'punc_text.json'), 'w') as f:
         json.dump(dict_texts, f, ensure_ascii=False)
@@ -85,7 +85,7 @@ def applyNemo_audio():
         print('Hii')
     return render_template("index.html")
 
-@app.route('/upload_audiofile', methods=['GET', 'POST'])
+@app.route('/result', methods=['GET', 'POST'])
 def upload_audiofile():
     if request.method == "POST":
         if request.files:
@@ -104,6 +104,8 @@ def upload_audiofile():
             else:
                 transcribed_text = chi_asr_model(audio_file.filename)
                 print(transcribed_text)
+                punc_text = punc_model(transcribed_text)
+                print(punc_text)
                 flash(transcribed_text)
 
             return redirect(request.url)

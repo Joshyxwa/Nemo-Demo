@@ -9,15 +9,15 @@
     <div>
         <h1>Record Voice with Nemo ASR</h1>
     </div>
-    <div id="controls">
+    <!-- <div id="controls">
         <form method="post" action="/stop_record">
             <button id="recordButton" name="recordButton">Record</button>
             <button id="pauseButton" name="pauseButton"disabled>Pause</button>
             <button id="stopButton" name="stopButton" disabled type="submit">Stop</button>
         </form>
-    </div>
+    </div> -->
 
-    <form action='/upload_audiofile' method="POST" enctype="multipart/form-data">
+    <form action='/result' method="POST" enctype="multipart/form-data">
         <div class="form-group dropdown">
             <label>Select Language Model</label>
             <select name="selectlanguage" id="selectlanguage">
@@ -35,11 +35,12 @@
 
         <button type="submit" class="btn btn-primary">Upload File</button>
     </form>
-
+<!-- 
     <div id="formats">Format: start recording to see sample rate</div>
     <p><strong>Recordings:</strong></p>
     <ol id="recordingsList"></ol>
-    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+    <!-- inserting these scripts at the end to be able to use all the elements in the DOM
     <script src="../static/js/app.js"></script>
-    <script src="../static/js/recorder.js"></script>
+    <script src="../static/js/recorder.js"></script> 
+-->
 {% endblock %}
