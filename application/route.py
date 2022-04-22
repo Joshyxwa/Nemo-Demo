@@ -24,6 +24,7 @@ def eng_asr_model(filename):
     os.remove(os.path.join(app.config["AUDIO_UPLOADS"], filename))
 
     # transcribe english audio to english text
+    # citrinet_model = onnx.load(os.path.join(app.config["MODEL_FILES"], "eng_citrinet.onnx"))
     citrinet_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "eng_citrinet.nemo"))
     sf.write(os.path.join(app.config["AUDIO_UPLOADS"], "preprocessed_audio.wav"), resampled_audio, sample_rate)
     transcribed_text = citrinet_model.transcribe(paths2audio_files=[os.path.join(app.config["AUDIO_UPLOADS"], "preprocessed_audio.wav")], batch_size=4)
