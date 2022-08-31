@@ -15,12 +15,6 @@ import yaml
 from omegaconf import DictConfig
 import tempfile
 
-app.config["AUDIO_UPLOADS"] = "application/static/audio"
-app.config["JSON_DATA"] = "application/static/json"
-app.config["MODEL_FILES"] = "models"
-app.config["ENG_MODEL"] = "eng_citrinet.onnx"
-app.config["CHI_MODEL"] = "chi_citrinet.onnx"
-app.config["PUNC_MODEL"] = "punc_bert.onnx"
 app.jinja_env.globals.update(config=app.config)
 
 class Nemo_models():
