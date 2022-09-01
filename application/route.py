@@ -15,14 +15,19 @@ import yaml
 from omegaconf import DictConfig
 import tempfile
 
+
+app.config["AUDIO_UPLOADS"] = "application/static/audio"
+app.config["JSON_DATA"] = "application/static/json"
+app.config["MODEL_FILES"] = "models"
 app.jinja_env.globals.update(config=app.config)
 
 class Nemo_models():
 
     def __init__(self):
-        self.eng_citrinet_model = nemo_asr.models.EncDecCTCModel.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "eng_citrinet.nemo"))
-        self.chi_citrinet_model = nemo_asr.models.EncDecCTCModel.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "chi_citrinet.nemo"))
-        self.puncbert_model = nemo_nlp.models.PunctuationCapitalizationModel.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "punc_bert.nemo"))
+        pass
+        # self.eng_citrinet_model = nemo_asr.models.EncDecCTCModel.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "eng_citrinet.nemo"))
+        # self.chi_citrinet_model = nemo_asr.models.EncDecCTCModel.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "chi_citrinet.nemo"))
+        # self.puncbert_model = nemo_nlp.models.PunctuationCapitalizationModel.restore_from(restore_path=os.path.join(app.config["MODEL_FILES"], "punc_bert.nemo"))
     # Model Functions
     def eng_asr_model(self, filename):
 
