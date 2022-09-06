@@ -5,7 +5,7 @@
  - To transcribe English audio files to english text
  2) stt_zh_citrinet_512
 - To transcribe Chinese audio files to chinese text
- 3) punctuation_en_bert
+ 3) punctuation_en_distilbert
 - To add capitalisation and punctuations to english transcribed text
 
 This project does not include fine tuning of models therefore models might not produce accurate results for certain accents. This project does not support good punctutation of chinese transcribed text as model is not punctuation_en_bert is not fine tuned to chinese dataset.
