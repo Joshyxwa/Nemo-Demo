@@ -13,8 +13,8 @@ header {
 }
 
 #banner #logo {
-    max-width: 40%;
-    height: auto;
+    max-height: 100px;
+    width: auto;
 }
 
 hr {

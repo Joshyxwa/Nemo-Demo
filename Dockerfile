@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.1.0-base-ubuntu20.04
+FROM python:3.8
 WORKDIR /code
 ENV DEBIAN_FRONTEND=noninteractive
 ENV FLASK_APP=app.py
